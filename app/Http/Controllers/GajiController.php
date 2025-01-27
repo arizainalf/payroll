@@ -17,20 +17,13 @@ class GajiController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
 
         $request->validate([
+            'user_id'     => 'required',
             'nip'         => 'required',
             'nama'        => 'required',
             'tahun_masuk' => 'required',
@@ -38,6 +31,7 @@ class GajiController extends Controller
             'jabatan'     => 'required',
         ]);
 
+        $userId      = $request->user_id;
         $nip         = $request->input('nip');
         $nama        = $request->input('nama');
         $tahun_masuk = $request->input('tahun_masuk');
@@ -82,6 +76,7 @@ class GajiController extends Controller
         }
 
         $save = Gaji::create([
+            'user_id'               => $userId,
             'nip'                   => $nip,
             'nama'                  => $nama,
             'tahun_masuk'           => $tahun_masuk,

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('gajis', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('nip')->unique();
             $table->string('nama');
             $table->year('tahun_masuk');

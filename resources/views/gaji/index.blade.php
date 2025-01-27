@@ -83,6 +83,7 @@
                 <div class="modal-body">
                     <form id="addEmployeeForm" action="{{ route('gaji.store') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                         <div class="mb-3">
                             <label for="nip" class="form-label">NIP</label>
                             <input type="text" class="form-control" id="nip" name="nip" required>
