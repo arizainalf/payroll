@@ -12,7 +12,7 @@ class GajiController extends Controller
      */
     public function index()
     {
-        $gajis = Gaji::all();
+        $gajis = Gaji::with('user')->get();
         return view('gaji.index', compact('gajis'));
     }
 

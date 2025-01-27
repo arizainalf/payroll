@@ -1,58 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee PT Argo Industri</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('title', 'Gaji')
+
+@push('style')
     <style>
-        body {
-            background-color: #2980B9;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-        }
-
         .card {
-            width: 90%;
-            max-width: 900px;
+            width: 100%;
+            max-width: 1200px;
         }
     </style>
-</head>
+@endpush
 
-<body>
-
+@section('main')
     <div class="card">
         <div class="card-header text-center">
             <h5>Employee PT Argo Industri</h5>
         </div>
         <div class="card-body">
-            <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">+
-                Tambah</button>
-            <table class="table table-bordered table-striped">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <!-- Tombol Tambah di sisi kiri -->
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                    + Tambah
+                </button>
+
+                <!-- Tombol Logout di sisi kanan -->
+                <a class="btn btn-danger" href="{{ route('logout') }}">Logout</a>
+            </div>
+
+            <table class="table table-responsive table-bordered table-striped">
                 <thead class="text-center">
                     <tr>
+                        <th class="text-center" width="5%">No</th>
                         <th>NIP</th>
                         <th>Nama</th>
                         <th>Tahun Masuk</th>
                         <th>Gaji Pokok</th>
                         <th>Jabatan</th>
                         <th>Total Gaji</th>
+                        <th>Dibuat Oleh</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($gajis as $gaji)
-                        <tr>
+                        <tr class="text-center">
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $gaji->nip }}</td>
                             <td>{{ $gaji->nama }}</td>
                             <td>{{ $gaji->tahun_masuk }}</td>
                             <td>Rp. {{ number_format($gaji->gaji_pokok, 0, ',', '.') }}</td>
                             <td>{{ $gaji->jabatan }}</td>
                             <td>Rp. {{ number_format($gaji->gaji_akhir, 0, ',', '.') }}</td>
+                            <td>{{ $gaji->user->name }}</td>
                             <td class="text-center">
                                 <a href="{{ route('gaji.cetak', $gaji->id) }}" class="btn btn-info btn-sm">Cetak</a>
 
@@ -64,6 +63,7 @@
                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                 </form>
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>
@@ -72,8 +72,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -134,7 +133,9 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+@endsection
+
+@push('scripts')
     <script>
         const jabatanSelect = document.getElementById('jabatan');
         const fieldJamLembur = document.getElementById('fieldJamLembur');
@@ -158,7 +159,4 @@
             }
         });
     </script>
-
-</body>
-
-</html>
+@endpush
